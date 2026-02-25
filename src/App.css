@@ -1,0 +1,198 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 16px 16px 96px;
+}
+
+.brand {
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.content {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.step {
+  color: #64748b;
+  margin: 0 0 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.option-button,
+button,
+a {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.option-button.active {
+  border-color: #0ea5e9;
+  background: #e0f2fe;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 14px;
+  border-color: #0284c7;
+  background: #0ea5e9;
+  color: #ffffff;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+}
+
+input[type='number'] {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.checks,
+.radio-group {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.stack {
+  display: grid;
+  gap: 10px;
+}
+
+.counter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.counter-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.counter-controls button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.result {
+  margin-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+.result-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.checkbox-single {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.instagram-fixed {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  border-color: #0284c7;
+  background: #0ea5e9;
+  color: #ffffff;
+  font-weight: 700;
+  z-index: 100;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  button,
+  .option-button,
+  a {
+    min-height: 52px;
+  }
+}
