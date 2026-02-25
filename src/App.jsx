@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/remont_odessa_legko/';
 
