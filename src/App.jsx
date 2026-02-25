@@ -133,9 +133,17 @@ const INITIAL_PLUMBING = {
   grooving: false,
 };
 
+const INITIAL_ESTIMATE = {
+  finishing: null,
+  electric: null,
+  plumbing: null,
+};
+
 const formatUAH = (value) => `${Math.round(value).toLocaleString('uk-UA')} грн`;
 
 const getRangeLabel = (min, max) => `от ${formatUAH(min)} до ${formatUAH(max)}`;
+
+const getShortRangeLabel = (min, max) => `${Math.round(min).toLocaleString('uk-UA')}–${Math.round(max).toLocaleString('uk-UA')} грн`;
 
 const clampToNonNegative = (value) => (Number.isFinite(value) && value > 0 ? value : 0);
 
@@ -287,6 +295,8 @@ function App() {
   const [plumbing, setPlumbing] = useState(INITIAL_PLUMBING);
   const [plumbingCalculated, setPlumbingCalculated] = useState(false);
 
+  const [estimate, setEstimate] = useState(INITIAL_ESTIMATE);
+
   const turnkeyResult = useMemo(() => calculateTurnkey(turnkey), [turnkey]);
   const finishingResult = useMemo(() => calculateFinishing(finishing), [finishing]);
   const electricResult = useMemo(() => calculateElectric(electric), [electric]);
@@ -295,7 +305,6 @@ function App() {
   const availableServices = finishing.zone ? ZONE_SERVICE_OPTIONS[finishing.zone] : [];
 
   const resetAllState = () => {
-    setActiveService(null);
     setTurnkeyStep(1);
     setTurnkey(INITIAL_TURNKEY);
     setTurnkeyCalculated(false);
@@ -312,6 +321,7 @@ function App() {
   };
 
   const resetToMain = () => {
+    setActiveService(null);
     resetAllState();
   };
 
@@ -338,6 +348,57 @@ function App() {
   const canMoveFinishingNext =
     (finishingStep === 1 && Boolean(finishing.zone)) ||
     (finishingStep === 2 && Boolean(finishing.service));
+
+  const estimateItems = [
+    { key: 'finishing', label: 'Отделка', value: estimate.finishing },
+    { key: 'electric', label: 'Электрика', value: estimate.electric },
+    { key: 'plumbing', label: 'Сантехника', value: estimate.plumbing },
+  ];
+  const hasEstimate = estimateItems.some((item) => item.value);
+  const estimateTotals = estimateItems.reduce(
+    (totals, item) => {
+      if (!item.value) {
+        return totals;
+      }
+      return {
+        min: totals.min + item.value.min,
+        max: totals.max + item.value.max,
+      };
+    },
+    { min: 0, max: 0 },
+  );
+
+  const handleFinishingCalculate = () => {
+    setFinishingCalculated(true);
+    if (finishingResult) {
+      setEstimate((prev) => ({ ...prev, finishing: finishingResult }));
+    }
+  };
+
+  const handleElectricCalculate = () => {
+    setElectricCalculated(true);
+    if (electricResult) {
+      setEstimate((prev) => ({ ...prev, electric: electricResult }));
+    }
+  };
+
+  const handlePlumbingCalculate = () => {
+    setPlumbingCalculated(true);
+    if (plumbingResult) {
+      setEstimate((prev) => ({ ...prev, plumbing: plumbingResult }));
+    }
+  };
+
+  const handleEstimateReset = () => {
+    setEstimate(INITIAL_ESTIMATE);
+    setFinishing(INITIAL_FINISHING);
+    setElectric(INITIAL_ELECTRIC);
+    setPlumbing(INITIAL_PLUMBING);
+    setFinishingCalculated(false);
+    setElectricCalculated(false);
+    setPlumbingCalculated(false);
+    setActiveService(null);
+  };
 
   return (
     <div className="app">
@@ -509,7 +570,7 @@ function App() {
                     Сложность
                   </label>
                 </div>
-                <button type="button" className="primary" onClick={() => setFinishingCalculated(true)} disabled={Number(finishing.area) <= 0}>
+                <button type="button" className="primary" onClick={handleFinishingCalculate} disabled={Number(finishing.area) <= 0}>
                   👉 Рассчитать
                 </button>
               </>
@@ -582,7 +643,7 @@ function App() {
               </label>
             </div>
 
-            <button type="button" className="primary" onClick={() => setElectricCalculated(true)}>
+            <button type="button" className="primary" onClick={handleElectricCalculate}>
               👉 Рассчитать
             </button>
             <div className="actions">
@@ -632,7 +693,7 @@ function App() {
               Штробление
             </label>
 
-            <button type="button" className="primary" onClick={() => setPlumbingCalculated(true)}>
+            <button type="button" className="primary" onClick={handlePlumbingCalculate}>
               👉 Рассчитать
             </button>
 
@@ -650,6 +711,72 @@ function App() {
                 </a>
               </div>
             ) : null}
+          </section>
+        ) : null}
+
+        {hasEstimate ? (
+          <section className="card">
+            <h2>Ваш расчёт</h2>
+            {estimateItems.map((item) =>
+              item.value ? (
+                <p key={item.key}>
+                  {item.label} — {getShortRangeLabel(item.value.min, item.value.max)}
+                </p>
+              ) : null,
+            )}
+
+            <hr />
+
+            <h3>Итого: {getRangeLabel(estimateTotals.min, estimateTotals.max)}</h3>
+
+            <div className="stack">
+              {estimate.finishing ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEstimate((prev) => ({ ...prev, finishing: null }));
+                    setFinishing(INITIAL_FINISHING);
+                    setFinishingStep(1);
+                    setFinishingCalculated(false);
+                    setActiveService('finishing');
+                  }}
+                >
+                  Пересчитать отделку
+                </button>
+              ) : null}
+
+              {estimate.electric ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEstimate((prev) => ({ ...prev, electric: null }));
+                    setElectric(INITIAL_ELECTRIC);
+                    setElectricCalculated(false);
+                    setActiveService('electric');
+                  }}
+                >
+                  Пересчитать электрику
+                </button>
+              ) : null}
+
+              {estimate.plumbing ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEstimate((prev) => ({ ...prev, plumbing: null }));
+                    setPlumbing(INITIAL_PLUMBING);
+                    setPlumbingCalculated(false);
+                    setActiveService('plumbing');
+                  }}
+                >
+                  Пересчитать сантехнику
+                </button>
+              ) : null}
+
+              <button type="button" onClick={handleEstimateReset}>
+                Сбросить всё
+              </button>
+            </div>
           </section>
         ) : null}
       </main>
