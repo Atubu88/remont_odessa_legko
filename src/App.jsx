@@ -715,8 +715,8 @@ function App() {
         ) : null}
 
         {hasEstimate ? (
-          <section className="card">
-            <h2>Ваш расчёт</h2>
+          <section className="card summary-card">
+            <h2>📋 Ваш расчёт</h2>
             {estimateItems.map((item) =>
               item.value ? (
                 <p key={item.key}>
@@ -729,9 +729,10 @@ function App() {
 
             <h3>Итого: {getRangeLabel(estimateTotals.min, estimateTotals.max)}</h3>
 
-            <div className="stack">
+            <div className="stack summary-actions">
               {estimate.finishing ? (
                 <button
+                  className="summary-button"
                   type="button"
                   onClick={() => {
                     setEstimate((prev) => ({ ...prev, finishing: null }));
@@ -747,6 +748,7 @@ function App() {
 
               {estimate.electric ? (
                 <button
+                  className="summary-button"
                   type="button"
                   onClick={() => {
                     setEstimate((prev) => ({ ...prev, electric: null }));
@@ -761,6 +763,7 @@ function App() {
 
               {estimate.plumbing ? (
                 <button
+                  className="summary-button"
                   type="button"
                   onClick={() => {
                     setEstimate((prev) => ({ ...prev, plumbing: null }));
@@ -773,7 +776,7 @@ function App() {
                 </button>
               ) : null}
 
-              <button type="button" onClick={handleEstimateReset}>
+              <button type="button" className="danger-button" onClick={handleEstimateReset}>
                 Сбросить всё
               </button>
             </div>
