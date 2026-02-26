@@ -37,6 +37,16 @@ body {
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 }
 
+.summary-card {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-top: 4px solid #0ea5e9;
+}
+
+.summary-card h2 {
+  color: #0369a1;
+}
+
 h1,
 h2,
 h3 {
@@ -125,6 +135,22 @@ input[type='number'] {
 .stack {
   display: grid;
   gap: 10px;
+}
+
+.summary-actions {
+  margin-top: 12px;
+}
+
+.summary-actions button {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.danger-button {
+  background: #fff1f2;
+  border-color: #fecaca;
+  color: #b91c1c;
 }
 
 .counter-row {
