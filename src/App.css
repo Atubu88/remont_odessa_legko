@@ -181,6 +181,16 @@ input[type='number'] {
   padding-top: 12px;
 }
 
+.turnkey-result {
+  display: grid;
+  gap: 10px;
+}
+
+.turnkey-result-note {
+  margin: 0;
+  color: #475569;
+}
+
 .result-actions {
   display: grid;
   grid-template-columns: 1fr;
