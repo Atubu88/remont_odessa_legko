@@ -287,13 +287,10 @@ function App() {
 
   const [finishingStep, setFinishingStep] = useState(1);
   const [finishing, setFinishing] = useState(INITIAL_FINISHING);
-  const [finishingCalculated, setFinishingCalculated] = useState(false);
 
   const [electric, setElectric] = useState(INITIAL_ELECTRIC);
-  const [electricCalculated, setElectricCalculated] = useState(false);
 
   const [plumbing, setPlumbing] = useState(INITIAL_PLUMBING);
-  const [plumbingCalculated, setPlumbingCalculated] = useState(false);
 
   const [estimate, setEstimate] = useState(INITIAL_ESTIMATE);
 
@@ -311,13 +308,10 @@ function App() {
 
     setFinishingStep(1);
     setFinishing(INITIAL_FINISHING);
-    setFinishingCalculated(false);
 
     setElectric(INITIAL_ELECTRIC);
-    setElectricCalculated(false);
 
     setPlumbing(INITIAL_PLUMBING);
-    setPlumbingCalculated(false);
   };
 
   const resetToMain = () => {
@@ -369,21 +363,18 @@ function App() {
   );
 
   const handleFinishingCalculate = () => {
-    setFinishingCalculated(true);
     if (finishingResult) {
       setEstimate((prev) => ({ ...prev, finishing: finishingResult }));
     }
   };
 
   const handleElectricCalculate = () => {
-    setElectricCalculated(true);
     if (electricResult) {
       setEstimate((prev) => ({ ...prev, electric: electricResult }));
     }
   };
 
   const handlePlumbingCalculate = () => {
-    setPlumbingCalculated(true);
     if (plumbingResult) {
       setEstimate((prev) => ({ ...prev, plumbing: plumbingResult }));
     }
@@ -394,9 +385,6 @@ function App() {
     setFinishing(INITIAL_FINISHING);
     setElectric(INITIAL_ELECTRIC);
     setPlumbing(INITIAL_PLUMBING);
-    setFinishingCalculated(false);
-    setElectricCalculated(false);
-    setPlumbingCalculated(false);
     setActiveService(null);
   };
 
@@ -587,14 +575,6 @@ function App() {
               ) : null}
             </div>
 
-            {finishingCalculated && finishingResult ? (
-              <div className="result">
-                <h3>{getRangeLabel(finishingResult.min, finishingResult.max)}</h3>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                  Написать в Instagram
-                </a>
-              </div>
-            ) : null}
           </section>
         ) : null}
 
@@ -649,14 +629,6 @@ function App() {
               </button>
             </div>
 
-            {electricCalculated ? (
-              <div className="result">
-                <h3>{getRangeLabel(electricResult.min, electricResult.max)}</h3>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                  Написать в Instagram
-                </a>
-              </div>
-            ) : null}
           </section>
         ) : null}
 
@@ -700,14 +672,6 @@ function App() {
               </button>
             </div>
 
-            {plumbingCalculated ? (
-              <div className="result">
-                <h3>{getRangeLabel(plumbingResult.min, plumbingResult.max)}</h3>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                  Написать в Instagram
-                </a>
-              </div>
-            ) : null}
           </section>
         ) : null}
 
@@ -735,7 +699,6 @@ function App() {
                     setEstimate((prev) => ({ ...prev, finishing: null }));
                     setFinishing(INITIAL_FINISHING);
                     setFinishingStep(1);
-                    setFinishingCalculated(false);
                     setActiveService('finishing');
                   }}
                 >
@@ -750,7 +713,6 @@ function App() {
                   onClick={() => {
                     setEstimate((prev) => ({ ...prev, electric: null }));
                     setElectric(INITIAL_ELECTRIC);
-                    setElectricCalculated(false);
                     setActiveService('electric');
                   }}
                 >
@@ -765,7 +727,6 @@ function App() {
                   onClick={() => {
                     setEstimate((prev) => ({ ...prev, plumbing: null }));
                     setPlumbing(INITIAL_PLUMBING);
-                    setPlumbingCalculated(false);
                     setActiveService('plumbing');
                   }}
                 >
