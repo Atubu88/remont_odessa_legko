@@ -490,14 +490,10 @@ function App() {
 
             {turnkeyCalculated && turnkeyResult ? (
               <div className="result">
-                <h3>{getRangeLabel(turnkeyResult.min, turnkeyResult.max)}</h3>
                 <div className="result-actions">
                   <button type="button" onClick={() => window.alert('Скоро свяжемся для точной сметы!')}>
                     Получить точную смету
                   </button>
-                  <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                    Написать в Instagram
-                  </a>
                 </div>
               </div>
             ) : null}
