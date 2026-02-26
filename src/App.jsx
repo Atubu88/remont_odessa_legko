@@ -489,7 +489,8 @@ function App() {
             </div>
 
             {turnkeyCalculated && turnkeyResult ? (
-              <div className="result">
+              <div className="result turnkey-result">
+                <p className="turnkey-result-note">Расчёт сохранён. Для точной сметы свяжитесь с нами.</p>
                 <div className="result-actions">
                   <button type="button" onClick={() => window.alert('Скоро свяжемся для точной сметы!')}>
                     Получить точную смету
